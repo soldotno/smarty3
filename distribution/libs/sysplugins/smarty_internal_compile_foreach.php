@@ -100,7 +100,7 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
         $usesPropShow = strpos($tpl->source->content, $ItemVarName . 'show') !== false;
         $usesPropTotal = $usesSmartyTotal || $usesSmartyShow || $usesPropShow || $usesPropLast || strpos($tpl->source->content, $ItemVarName . 'total') !== false;
         // generate output code
-        $output = "<?php error_reporting('E_ERROR & ~E_NOTICE'); ";
+        $output = "<?php ";
         $output .= " \$_smarty_tpl->tpl_vars[$item] = new Smarty_Variable; \$_smarty_tpl->tpl_vars[$item]->_loop = false;\n";
         if ($key != null) {
             $output .= " \$_smarty_tpl->tpl_vars[$key] = new Smarty_Variable;\n";
@@ -126,13 +126,13 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
                 $output .= " \$_smarty_tpl->tpl_vars['smarty']->value['foreach'][$name]['iteration']=0;\n";
             }
             if ($usesSmartyIndex) {
-                $output .= " \$_smarty_tpl->tpl_vars['smarty']->value['foreach'][$name]['index']=-1;\n";
+               $output .= " \$_smarty_tpl->tpl_vars['smarty']->value['foreach'][$name]['index']=-1;\n";
             }
             if ($usesSmartyShow) {
                 $output .= " \$_smarty_tpl->tpl_vars['smarty']->value['foreach'][$name]['show']=(\$_smarty_tpl->tpl_vars[$item]->total > 0);\n";
             }
         }
-        $output .= "foreach (\$_from as \$_smarty_tpl->tpl_vars[$item]->key => \$_smarty_tpl->tpl_vars[$item]->value) {\n\$_smarty_tpl->tpl_vars[$item]->_loop = true;\n";
+        $output .= "foreach (\$_from as \$_smarty_tpl->tpl_vars[\"$item\"]->key => \$_smarty_tpl->tpl_vars[$item]->value) {\n\$_smarty_tpl->tpl_vars[$item]->_loop = true;\n";
         if ($key != null) {
             $output .= " \$_smarty_tpl->tpl_vars[$key]->value = \$_smarty_tpl->tpl_vars[$item]->key;\n";
         }
